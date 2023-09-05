@@ -1,56 +1,48 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-// function App() {
-//   const [count, setCount] = useState(0)
 
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vitejs.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
+const Display = (props) => {
+  return (
+    <div>{props.counter}</div>
+  )
+}
+const Button = (props) => {
+  return (
+    <button onClick={props.handleClick}>
+      {props.text}
+    </button>
+  )
+}
 // export default App
-const Hello = (props) => {
-  console.log(props);
-  return (
-    <div>
-      <p>Hello {props.name}</p>
-    </div>
-  )
-}
-
 const App = () => {
+  const [clicks, setclicks] = useState({left:0, right:0})
+
+  const handleLeftClick = () => {
+    const newclicks = {
+      left: clicks.left + 1,
+      right: clicks.right
+    }
+    console.log(newclicks);
+    setclicks(newclicks)
+  }
+
+  const handleRightClick = () => {
+    const newclicks = {
+      left: clicks.left,
+      right: clicks.right + 1
+    }
+    setclicks(newclicks)
+  }
   return (
     <div>
-      <h1>Greetings</h1>
-
-      <Hello name="George" />
-      <Hello name="Costanza" />
+      {clicks.left}
+      <button onClick={handleLeftClick}>left</button>
+      <button onClick={handleRightClick}>right</button>
+      {clicks.right}
     </div>
   )
-}
-
+} 
 export default App
