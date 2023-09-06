@@ -1,48 +1,27 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
 
-const Display = (props) => {
-  return (
-    <div>{props.counter}</div>
-  )
-}
-const Button = (props) => {
-  return (
-    <button onClick={props.handleClick}>
-      {props.text}
-    </button>
-  )
-}
-// export default App
+
 const App = () => {
-  const [clicks, setclicks] = useState({left:0, right:0})
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
 
-  const handleLeftClick = () => {
-    const newclicks = {
-      left: clicks.left + 1,
-      right: clicks.right
-    }
-    console.log(newclicks);
-    setclicks(newclicks)
-  }
-
-  const handleRightClick = () => {
-    const newclicks = {
-      left: clicks.left,
-      right: clicks.right + 1
-    }
-    setclicks(newclicks)
-  }
   return (
     <div>
-      {clicks.left}
-      <button onClick={handleLeftClick}>left</button>
-      <button onClick={handleRightClick}>right</button>
-      {clicks.right}
+      <h1>give feedback</h1>
+      <button onClick={()=>setGood(good+1)}>good</button>
+      <button onClick={()=>setNeutral(neutral+1)}>neutral</button>
+      <button onClick={()=>setBad(bad+1)}>bad</button>
+      <h1>Statistics</h1>
+      good {good}
+      <br/>
+      neutral {neutral}
+      <br/>
+      bad {bad}
     </div>
   )
-} 
+}
+
 export default App
