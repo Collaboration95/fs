@@ -3,9 +3,9 @@ import { useState } from 'react'
 const Button =()=>{
     console.log("Guru");
     return (
-    <>
+
     <button>next anecdotes</button>
-    </>
+
     )
 }
 
@@ -20,13 +20,25 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
+  const points = new Uint8Array(anecdotes.length);
    
   const [selected, setSelected] = useState(0)
-
+  const [votes, setVotes] = useState(points);
   return (
     <div>
+        <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
+      <p>has {votes[selected]} votes</p>
+      <button onClick={()=>{const copy = [...votes];
+        copy[selected]+=1;
+        setVotes(copy);
+        console.log(copy);
+    }}>vote</button>
         <button onClick={()=>setSelected(Math.floor(Math.random()*anecdotes.length))}>next anecdote</button>
+        <h1>Anecdote with most votes</h1>
+        {anecdotes[votes.indexOf(Math.max.apply(null,votes))]}
+        <p>has {votes[votes.indexOf(Math.max.apply(null,votes))]} votes</p>
+
     </div>
     
   )
