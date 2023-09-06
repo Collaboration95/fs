@@ -1,48 +1,87 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
+const Statistics = ({good , bad , neutral})=>{
 
-const Display = (props) => {
+  if((good+bad+neutral)>0){
   return (
-    <div>{props.counter}</div>
+    <>
+      <h1>Statistics</h1>
+      <table>
+      <StatisticsLine text="good" value={good}/>
+      <StatisticsLine text="neutral" value={neutral}/>
+      <StatisticsLine text="bad" value={bad}/>
+      <Average good={good} bad = {bad} neutral={neutral}/>
+      <Positive good={good} bad = {bad} neutral={neutral}/>
+      </table>
+    </>
+  )
+  }
+  else{
+    return <h3>No feedback given</h3>
+  }
+}
+const StatisticsLine=({text,value})=>{
+
+  return (
+    <tr>
+    <td>{text}</td>
+    <td> {value}</td>
+    </tr>
   )
 }
-const Button = (props) => {
-  return (
-    <button onClick={props.handleClick}>
-      {props.text}
-    </button>
-  )
+
+const Average= ({good,neutral,bad})=>{
+  const average = (good-bad)/(good+neutral+bad);
+  if((good+bad+neutral)>0){
+    return (
+      <tr>
+      <td>average</td><td> {average}</td>
+      </tr>
+    )
+  }
+  else{
+    return(
+      <tr>
+      <td>average</td><td> 0</td>
+      </tr>
+    )
+  }  
 }
-// export default App
+const Positive= ({good,neutral,bad})=>{
+  const average = (good)*100/(good+neutral+bad);
+  if((good+bad+neutral)>0){
+    return (
+      <tr>
+        <td>positive</td>
+        <td> {average}%</td>
+      </tr>
+    )
+  }
+  else{
+    return(
+      <tr>
+      <td>positive</td>
+      <td>0%</td>
+    </tr>
+    )
+  }  
+}
+
 const App = () => {
-  const [clicks, setclicks] = useState({left:0, right:0})
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
 
-  const handleLeftClick = () => {
-    const newclicks = {
-      left: clicks.left + 1,
-      right: clicks.right
-    }
-    console.log(newclicks);
-    setclicks(newclicks)
-  }
-
-  const handleRightClick = () => {
-    const newclicks = {
-      left: clicks.left,
-      right: clicks.right + 1
-    }
-    setclicks(newclicks)
-  }
   return (
     <div>
-      {clicks.left}
-      <button onClick={handleLeftClick}>left</button>
-      <button onClick={handleRightClick}>right</button>
-      {clicks.right}
+      <h1>give feedback</h1>
+      <button onClick={()=>setGood(good+1)}>good</button>
+      <button onClick={()=>setNeutral(neutral+1)}>neutral</button>
+      <button onClick={()=>setBad(bad+1)}>bad</button>
+      <Statistics bad={bad} good={good} neutral={neutral}/>
     </div>
   )
-} 
+}
+
 export default App
