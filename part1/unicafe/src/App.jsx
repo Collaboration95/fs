@@ -6,15 +6,13 @@ const Statistics = ({good , bad , neutral})=>{
   return (
     <>
       <h1>Statistics</h1>
-      good {good}
-      <br/>
-      neutral {neutral}
-      <br/>
-      bad {bad}
-      <br/>
+      <table>
+      <StatisticsLine text="good" value={good}/>
+      <StatisticsLine text="neutral" value={neutral}/>
+      <StatisticsLine text="bad" value={bad}/>
       <Average good={good} bad = {bad} neutral={neutral}/>
-      <br/>
       <Positive good={good} bad = {bad} neutral={neutral}/>
+      </table>
     </>
   )
   }
@@ -22,21 +20,30 @@ const Statistics = ({good , bad , neutral})=>{
     return <h3>No feedback given</h3>
   }
 }
+const StatisticsLine=({text,value})=>{
+
+  return (
+    <tr>
+    <td>{text}</td>
+    <td> {value}</td>
+    </tr>
+  )
+}
 
 const Average= ({good,neutral,bad})=>{
   const average = (good-bad)/(good+neutral+bad);
   if((good+bad+neutral)>0){
     return (
-      <>
-      average {average}
-      </>
+      <tr>
+      <td>average</td><td> {average}</td>
+      </tr>
     )
   }
   else{
     return(
-      <>
-      average 0
-      </>
+      <tr>
+      <td>average</td><td> 0</td>
+      </tr>
     )
   }  
 }
@@ -44,16 +51,18 @@ const Positive= ({good,neutral,bad})=>{
   const average = (good)*100/(good+neutral+bad);
   if((good+bad+neutral)>0){
     return (
-      <>
-      positive {average}%
-      </>
+      <tr>
+        <td>positive</td>
+        <td> {average}%</td>
+      </tr>
     )
   }
   else{
     return(
-      <>
-      positive 0%
-      </>
+      <tr>
+      <td>positive</td>
+      <td>0%</td>
+    </tr>
     )
   }  
 }
