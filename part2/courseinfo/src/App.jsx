@@ -17,7 +17,8 @@ const Content = ({ parts }) =>
     />
     <Part
       part={parts[2]} 
-    />      
+    />  
+    <h3>total of {parts.reduce((total,start)=>{return total+start.exercises;},0)} exercises</h3>    
   </>
 
 
