@@ -3,9 +3,7 @@ import { useState } from 'react'
 const Button =()=>{
     console.log("Guru");
     return (
-
     <button>next anecdotes</button>
-
     )
 }
 
