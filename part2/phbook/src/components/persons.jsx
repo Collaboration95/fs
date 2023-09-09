@@ -1,12 +1,16 @@
-const Persons = ({personToShow})=>{
+const Persons = ({personToShow,handleClick})=>{
     return(
         <>
         <h2>Numbers</h2>
         <ul>
             {personToShow.map((person,i)=>(
-            <li key={i}>{person.name} {person.number}</li>
+                
+            <li key={person.id}>{person.name} {person.number}
+            <button key={person.id} onClick={()=>{handleClick(person.id)}}>Delete</button>
+            </li>
             ))}
         </ul>
+        
         </>
     )
   }

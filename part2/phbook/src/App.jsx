@@ -55,17 +55,28 @@ const App = () => {
   const handleFilter = (event)=>{
     setFilter(event.target.value);
   }
+  const handleClick = (id)=>{
+    event.preventDefault();
+    const result = window.confirm(`Delete ${id} ?`);
+    if(result){
+      personService.deletePerson(id)
+      .then(response=>{
+        console.log(response.data)
+      })
+      setPersons(persons.filter(person=>person.id!=id))
+    }
+  }
 
     const personToShow = newFilter ?
     persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase())) :persons
-
+    
   return (
     <>
       <PhoneBook addNewPerson={addNewPerson} newName={newName} handleChange={handleChange} newNumber={newNumber} handleNumber={handleNumber} />
       <Filter addNewFilter={addNewFilter} newFilter={newFilter} handleFilter={handleFilter} />
-      <Persons personToShow={personToShow} />
+      <Persons personToShow={personToShow} handleClick={handleClick} />
     </>
   )
-}
+}  
 
 export default App
