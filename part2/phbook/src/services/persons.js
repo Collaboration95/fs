@@ -15,6 +15,12 @@ const update = (id, newObject) => {
 
 const deletePerson = (id) => {
   return axios.delete(`${baseUrl}/${id}`)
+  return response.then(response => response.data).catch(error => {
+    console.log('fail')
+    return Promise.reject(error.response.data)
+  }
+  )
+
 }
 
 

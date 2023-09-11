@@ -3,8 +3,7 @@ const Persons = ({personToShow,handleClick})=>{
         <>
         <h2>Numbers</h2>
         <ul>
-            {personToShow.map((person,i)=>(
-                
+            {personToShow.map((person)=>(
             <li key={person.id}>{person.name} {person.number}
             <button key={person.id} onClick={()=>{handleClick(person.id)}}>Delete</button>
             </li>
