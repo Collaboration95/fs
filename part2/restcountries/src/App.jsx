@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
- 
 import countryService from './services/country'
 import Filter from './components/Filter'
 import Countries from './components/Countries'
@@ -24,7 +21,6 @@ function App() {
 
     countryService.getLocalAll().then(response => {
       const data = response.data[0].filter(country => ['common'].some(key => country.name[key].toLowerCase()==event.target.value.toLowerCase()));
-      console.log(data);
       setCountries(data);
     }
     )  
