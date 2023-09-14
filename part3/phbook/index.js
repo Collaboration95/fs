@@ -39,32 +39,43 @@ app.get('/info',(request,response)=>{
                     <p>${date}</p></div>`)
 }
 )
-// const generateId = () => {
-//     const maxId = notes.length > 0
-//       ? Math.max(...notes.map(n => n.id))
-//       : 0
-//     return maxId + 1
-//   }
+app.delete('/api/persons/delete/:id', (request, response) => {
+    const id = Number(request.params.id)
+    persons = persons.filter(note => note.id !== id)
+    response.status(204).end()
+}
+)
+
+const generateId = () => {
+  const randomNumber = Math.floor(Math.random() * 1000000) + 1;
+  return randomNumber;
+  }
   
-  // app.post('/api/notes', (request, response) => {
-  //   const body = request.body
+  app.post('/api/persons', (request, response) => {
+    const body = request.body
+  console.log(body)
+    if (!body.name) {
+      return response.status(400).json({ 
+        error: 'content missing' 
+      })
+    }
+    const personName = persons.find(note => note.name === body.name)
+    if(personName){
+        return response.status(400).json({
+            error: 'name must be unique'
+        })
+    }
   
-  //   if (!body.content) {
-  //     return response.status(400).json({ 
-  //       error: 'content missing' 
-  //     })
-  //   }
+    const person = {
+      name:body.name,
+      number:body.number,
+      id: generateId()
+    }
   
-  //   const note = {
-  //     content: body.content,
-  //     important: body.important || false,
-  //     id: generateId(),
-  //   }
+    persons = persons.concat(person)
   
-  //   notes = notes.concat(note)
-  
-  //   response.json(note)
-  // })
+    response.json(persons)
+  })
 
 app.get('/api/persons/:id', (request, response) => {
     const id =Number(request.params.id);
