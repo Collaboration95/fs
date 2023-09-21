@@ -1,0 +1,10 @@
+# POST http://localhost:3001/api/blogs
+# Content-Type: application/json
+
+# {
+#   "title": "Arto Hellas",
+#   "author": "83928292 232",
+#   "url": "http://www.helsinki.fi",
+#   "likes": 5
+# }
+GET http://localhost:3001/api/blogs
