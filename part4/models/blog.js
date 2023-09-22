@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 mongoose.set("strictQuery",false)
 
 const blogSchema = new mongoose.Schema({
@@ -15,4 +15,4 @@ const blogSchema = new mongoose.Schema({
     }
   })
 
-    module.exports = mongoose.model('Blog', blogSchema)
+    module.exports = mongoose.model("Blog", blogSchema)
