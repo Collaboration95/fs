@@ -66,7 +66,7 @@ describe("maximum likes", () => {
         })
   })
 
-    describe("most blogs", () => {
+describe("most blogs", () => {
             test("most likes from author", () => {
                 const authorBlogs = [
                     {
@@ -201,4 +201,4 @@ describe("maximum likes", () => {
                     const result = listHelper.mostBlogs(authorBlogs)
                     expect(result).toEqual("Tech Guru")
                     })
-        })
+  })
