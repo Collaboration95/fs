@@ -67,26 +67,35 @@ const starterData = [
     }
   ]
 
-  beforeEach(async () => {
-    await Blog.deleteMany({})
-    let blogObject = new Blog(starterData[0])
-    await blogObject.save()
-    blogObject = new Blog(starterData[1])
-    await blogObject.save()
-  })
-
-test("4.8 notes are returned as json", async () => {
-  const response = await api.get("/api/blogs")
-  await expect(response.status).toBe(200)
-  await expect(response.type).toEqual("application/json")
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  let blogObject = new Blog(starterData[0])
+  await blogObject.save()
+  blogObject = new Blog(starterData[1])
+  await blogObject.save()
 })
 
-test("4.9 unique id property", async () => {
+describe("4.8 Test Suite", () => {
+  test("4.8 notes are returned as json", async () => {
+    const response = await api.get("/api/blogs")
+    await expect(response.status).toBe(200)
+    await expect(response.type).toEqual("application/json")
+  })
+}
+)
+
+describe("4.9 Test Suite", () => {
+  test("4.9 unique id property", async () => {
     const response = await api.get("/api/blogs")
     await expect(response.body[0].id).toBeDefined()
 })
 
-test("4.10 post method", async () => {
+})
+
+
+describe("4.10 Test Suite", () => {
+
+  test("4.10 post method", async () => {
     const newBlog = {
         "title": "Generic Blog Title 3",
         "author": "Bob Author",
@@ -103,7 +112,11 @@ test("4.10 post method", async () => {
     await expect(finalLength).toBe(initialLength + 1)
   })
 
-test("4.11 default likes", async () => {
+}
+)
+describe("4.11 Test Suite", () => {
+
+  test("4.11 default likes", async () => {
     const newBlog = {
         "title": "Generic Blog Title 3",
         "author": "Bob Author",
@@ -115,15 +128,45 @@ test("4.11 default likes", async () => {
     await expect(response.type).toEqual("application/json")
     await expect(response.body.likes).toBe(0)
 })
+}
+)
+describe("4.12 Test Suite", () => {
 
-test("4.12 missing data", async () => {
-  const newBlog = {
-      "author": "Bob Author",
-      "like":21
-      }
-  const response = await api.post("/api/blogs").send(newBlog)
-  await expect(response.status).toBe(400)
-})
+  test("4.12 missing data", async () => {
+    const newBlog = {
+        "author": "Bob Author",
+        "like":21
+        }
+    const response = await api.post("/api/blogs").send(newBlog)
+    await expect(response.status).toBe(400)
+  })
+}
+)
+
+describe("4.13 Test Suite", () => {
+  test("4.13 delete method", async () => {
+    const response1 = await api.get("/api/blogs")
+    const initialLength = response1.body.length
+    const id = response1.body[0].id
+    const response = await api.delete(`/api/blogs/${id}`)
+    await expect(response.status).toBe(204)
+    const response2 = await api.get("/api/blogs")
+    const finalLength = response2.body.length
+    await expect(finalLength).toBe(initialLength - 1)
+  })
+}
+)
+
+describe("4.14 Test Suite", () => {
+  test("4.14 patch likes", async () => {
+    const response1 = await api.get("/api/blogs")
+    const id = response1.body[0].id
+    const response = await api.patch(`/api/blogs/${id}`).send({ likes: 100 })
+    await expect(response.status).toBe(201)
+    await expect(response.body.likes).toBe(100)
+  })
+}
+)
 
 afterAll(async () => {
   await mongoose.connection.close()

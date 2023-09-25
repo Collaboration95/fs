@@ -9,12 +9,34 @@ blogRouter.get("/", (request, response) => {
     })
 })
 
+blogRouter.delete("/:id", (request, response) => {
+  Blog
+    .findByIdAndRemove(request.params.id)
+    .then(() => {
+      response.status(204).end()
+    })
+})
+
+blogRouter.patch("/:id", (request, response) => {
+  const body = request.body
+  const blog = {
+    likes: body.likes
+  }
+  Blog
+    .findByIdAndUpdate(request.params.id, blog, { new: true })
+    .then(updatedBlog => {
+      response.status(201).json(updatedBlog.toJSON())
+    })
+})
+
+
 blogRouter.post("/", (request, response) => {
   const blog = new Blog(request.body)
+
   if(!blog.likes) {
     blog.likes = 0
   }
-  if(!blog.title || !blog.url) {
+  if(!blog.title || !blog.url || !blog.author) {
     return response.status(400).json({ error: "Bad Request" }).end()
 
   }
