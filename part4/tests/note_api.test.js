@@ -4,6 +4,7 @@ const User = require("../models/user")
 const supertest = require("supertest")
 const app = require("../app")
 const Blog = require("../models/blog")
+const helper = require("./test_helper")
 const api = supertest(app)
 
 const starterData = [
@@ -71,9 +72,9 @@ const starterData = [
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let blogObject = new Blog(starterData[0])
+  let blogObject = new Blog(helper.starterData[0])
   await blogObject.save()
-  blogObject = new Blog(starterData[1])
+  blogObject = new Blog(helper.starterData[1])
   await blogObject.save()
 })
 
@@ -109,6 +110,10 @@ describe("4.10 Test Suite", () => {
     const response = await api.post("/api/blogs").send(newBlog)
     await expect(response.type).toEqual("application/json")
     await expect(response.status).toBe(201)
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(3)
+    const contents = blogsAtEnd.map(n => n.title)
+    expect(contents).toContain("Generic Blog Title 3")
     const response2 = await api.get("/api/blogs")
     const finalLength = response2.body.length
     await expect(finalLength).toBe(initialLength + 1)
@@ -141,6 +146,8 @@ describe("4.12 Test Suite", () => {
         }
     const response = await api.post("/api/blogs").send(newBlog)
     await expect(response.status).toBe(400)
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(2)
   })
 }
 )
