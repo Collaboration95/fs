@@ -2,8 +2,6 @@ const listHelper = require("../utils/list_helper")
 
 describe("total likes", () => {
 
-    
-
     test("total likes with one blog", () => {
       const listWithOneBlog = [
         {

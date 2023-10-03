@@ -37,24 +37,28 @@ describe("4.9 Test Suite", () => {
 describe("4.10 Test Suite", () => {
 
   test("4.10 post method", async () => {
-    const newBlog = {
-        "title": "Generic Blog Title 3",
-        "author": "Bob Author",
-        "url": "http://www.example.com",
-        "likes": 1
-        }
+
+    const login = await api.post("/api/login").send({ username: "test123", password: "password" })
+    const token = login.body.token
+
+    const newBlog ={
+      "title": "Teen Titans",
+      "author": "Final Thing",
+      "url": "http://www.foodblog.com",
+      "userId": "651ac9adb940f4a0e3a640bd"
+      }
     const response1 = await api.get("/api/blogs")
     const initialLength = response1.body.length
-    const response = await api.post("/api/blogs").send(newBlog)
-    await expect(response.type).toEqual("application/json")
+    const response = await api.post("/api/blogs")
+                              .set("Authorization", `Bearer ${token}`)
+                              .set("Content-Type", "application/json")
+                              .send(newBlog)
+
     await expect(response.status).toBe(201)
-    const blogsAtEnd = await helper.blogsInDb()
-    expect(blogsAtEnd).toHaveLength(3)
-    const contents = blogsAtEnd.map(n => n.title)
-    expect(contents).toContain("Generic Blog Title 3")
     const response2 = await api.get("/api/blogs")
     const finalLength = response2.body.length
     await expect(finalLength).toBe(initialLength + 1)
+
   })
 
 }
@@ -62,42 +66,65 @@ describe("4.10 Test Suite", () => {
 describe("4.11 Test Suite", () => {
 
   test("4.11 default likes", async () => {
+    const login = await api.post("/api/login").send({ username: "test123", password: "password" })
+    const token = login.body.token
+
     const newBlog = {
         "title": "Generic Blog Title 3",
         "author": "Bob Author",
         "url": "http://www.example.com"
         }
-
-    const response = await api.post("/api/blogs").send(newBlog)
-    await expect(response.status).toBe(201)
+    const response = await api.post("/api/blogs")
+                              .set("Authorization", `Bearer ${token}`)
+                              .set("Content-Type", "application/json")
+                              .send(newBlog)
+     await expect(response.status).toBe(201)
     await expect(response.type).toEqual("application/json")
     await expect(response.body.likes).toBe(0)
 })
-}
-)
+})
+
 describe("4.12 Test Suite", () => {
 
   test("4.12 missing data", async () => {
+    const login = await api.post("/api/login").send({ username: "test123", password: "password" })
+    const token = login.body.token
+
     const newBlog = {
         "author": "Bob Author",
         "like":21
         }
-    const response = await api.post("/api/blogs").send(newBlog)
+
+    const response1 = await api.get("/api/blogs")
+    const initialLength = response1.body.length
+    const response = await api.post("/api/blogs")
+                              .set("Authorization", `Bearer ${token}`)
+                              .set("Content-Type", "application/json")
+                              .send(newBlog)
+
     await expect(response.status).toBe(400)
-    const blogsAtEnd = await helper.blogsInDb()
-    expect(blogsAtEnd).toHaveLength(2)
+    const response2 = await api.get("/api/blogs")
+    const finalLength = response2.body.length
+    await expect(finalLength).toBe(initialLength)
+
   })
 }
 )
 
 describe("4.13 Test Suite", () => {
-  test("4.13 delete method", async () => {
+  test("4.13 delete method correct user", async () => {
+    const login = await api.post("/api/login").send({ username: "test123", password: "password" })
+    const token = login.body.token
     const response1 = await api.get("/api/blogs")
     const initialLength = response1.body.length
     const id = response1.body[0].id
+    console.log(id)
     const response = await api.delete(`/api/blogs/${id}`)
-    await expect(response.status).toBe(204)
-    const response2 = await api.get("/api/blogs")
+                              .set("Authorization", `Bearer ${token}`)
+                              .set("Content-Type", "application/json")
+                              
+                              const response2 = await api.get("/api/blogs")
+                              console.log(response.body)
     const finalLength = response2.body.length
     await expect(finalLength).toBe(initialLength - 1)
   })

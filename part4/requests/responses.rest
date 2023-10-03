@@ -7,18 +7,17 @@
 # "password": "password"
 # }
 
-# POST http://localhost:3001/api/blogs
-# Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMwZTVhNzcwZjMxYmE1ZjdkZTc5YiIsImlhdCI6MTY5NjMzOTY5MSwiZXhwIjoxNjk2MzQzMjkxfQ.QqFfSkAlaZhNggAGFjcapE1LV9H14W7AiuynzIW7XY0
-
-# {
-# "title": "Teen Titans",
-# "author": "Final Thing",
-# "url": "http://www.foodblog.com",
-# "userId": "651ac9adb940f4a0e3a640bd"
-# }
-
-DELETE http://localhost:3001/api/blogs/651c1bd3a2301c030034c1bb
+POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMwZTVhNzcwZjMxYmE1ZjdkZTc5YiIsImlhdCI6MTY5NjMzNzUwNywiZXhwIjoxNjk2MzQxMTA3fQ.r5d4LxZTTbCC1xd1gJ1XmPcfkdfGT1JFsxLP6-9h8xI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMzZGEwMWRlNDlmZjI2ZDgxNjA3YyIsImlhdCI6MTY5NjM1MDE0MCwiZXhwIjoxNjk2MzUzNzQwfQ.ZG32vX438KERlqYpwa53OZWJtsGYjN3jbO8OBFgd3DE
+
+{
+"title": "Teen Titans",
+
+"userId": "651ac9adb940f4a0e3a640bd"
+}
+
+# DELETE http://localhost:3001/api/blogs/651c1bd3a2301c030034c1bb
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMwZTVhNzcwZjMxYmE1ZjdkZTc5YiIsImlhdCI6MTY5NjMzNzUwNywiZXhwIjoxNjk2MzQxMTA3fQ.r5d4LxZTTbCC1xd1gJ1XmPcfkdfGT1JFsxLP6-9h8xI
 
