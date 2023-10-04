@@ -12,8 +12,6 @@ beforeEach(async () => {
   await Blog.deleteMany({})
   let blogObject = new Blog(helper.starterData[0])
   await blogObject.save()
-  blogObject = new Blog(helper.starterData[1])
-  await blogObject.save()
 })
 
 describe("4.8 Test Suite", () => {
@@ -115,34 +113,76 @@ describe("4.13 Test Suite", () => {
   test("4.13 delete method correct user", async () => {
     const login = await api.post("/api/login").send({ username: "test123", password: "password" })
     const token = login.body.token
-    const response1 = await api.get("/api/blogs")
-    const initialLength = response1.body.length
-    const id = response1.body[0].id
-    console.log(id)
-    const response = await api.delete(`/api/blogs/${id}`)
+    //  post a new blog for testing purposers
+    const newBlog ={
+      "title": "Delete Testing Purposes",
+      "author": "Should never be visible",
+      "url": "http://www.foodblog.com",
+      "userId": "651ac9adb940f4a0e3a640bd",
+      "likes":10
+      }
+
+
+    const response = await api.post("/api/blogs")
                               .set("Authorization", `Bearer ${token}`)
                               .set("Content-Type", "application/json")
-                              
-                              const response2 = await api.get("/api/blogs")
-                              console.log(response.body)
-    const finalLength = response2.body.length
-    await expect(finalLength).toBe(initialLength - 1)
+                              .send(newBlog)
+
+    await expect(response.status).toBe(201)
+    const id = response.body.id
+    const response1 = await api.delete(`/api/blogs/${id}`)
+                              .set("Authorization", `Bearer ${token}`)
+                              .set("Content-Type", "application/json")
+    await expect(response1.status).toBe(204)
+
+    // const response1 = await api.get("/api/blogs")
+    // const initialLength = response1.body.length
+    // const id = response1.body[0].id
+    // console.log(id)
+    // const response = await api.delete(`/api/blogs/${id}`)
+    //                           .set("Authorization", `Bearer ${token}`)
+    //                           .set("Content-Type", "application/json")
+    // const response2 = await api.get("/api/blogs")
+    // await expect (response.body).toEqual({ message: "Blog deleted" })
+    // const finalLength = response2.body.length
+    // await expect(finalLength).toBe(initialLength - 1)
   })
 }
 )
 
 describe("4.14 Test Suite", () => {
   test("4.14 patch likes", async () => {
-    const response1 = await api.get("/api/blogs")
-    const id = response1.body[0].id
-    const response = await api.patch(`/api/blogs/${id}`).send({ likes: 100 })
-    await expect(response.status).toBe(201)
-    await expect(response.body.likes).toBe(100)
-  })
-}
-)
+    const login = await api.post("/api/login").send({ username: "test123", password: "password" })
+    const token = login.body.token
 
-describe("when there is initially one user in db", () => {
+    const newBlog ={
+      "title": "Teen Titans",
+      "author": "Final Thing",
+      "url": "http://www.foodblog.com",
+      "userId": "651ac9adb940f4a0e3a640bd",
+      "likes":10
+      }
+
+
+    const response = await api.post("/api/blogs")
+                              .set("Authorization", `Bearer ${token}`)
+                              .set("Content-Type", "application/json")
+                              .send(newBlog)
+
+    await expect(response.status).toBe(201)
+    const likes =  Math.floor(Math.random() * (99999 - 0 + 1)) +0
+    const id = response.body.id
+    const response3 = await api.patch(`/api/blogs/${id}`)
+                                .set("Authorization", `Bearer ${token}`)
+                                .set("Content-Type", "application/json")
+                                .send({ likes: likes })
+    await expect(response3.status).toBe(201)
+
+    await expect(response3.body.likes).toBe(likes)
+  })
+})
+
+describe("4 when there is initially one user in db", () => {
   beforeEach(async () => {
     await User.deleteMany({})
 

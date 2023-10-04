@@ -26,12 +26,41 @@ blogRouter.delete("/:id", async (request, response) => {
 
 blogRouter.patch("/:id", async (request, response) => {
   const body = request.body
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: "token invalid" })
+  }
+  const user = request.user
+  if (!user) {
+    return response.status(404).json({ error: "User not found" }).end()
+  }
+  console.log(request.params.id)
+  const bloginfo = await Blog.findById({ _id: request.params.id })
+  console.log(bloginfo)
+  if(!bloginfo || !user || !bloginfo.user || !user.id) {
+    return response.status(404).json({ error: "Blog not found" }).end()
+  }
+  console.log(bloginfo.user.toString())
+  console.log(user.id.toString())
+  if (bloginfo.user.toString() !== user.id.toString()) {
+    return response.status(401).json({ error: "Unauthorized" })
+  }
+
   const blog = {
     likes: body.likes
   }
-  const result = await Blog.findById({ _id: request.params.id }, blog, { new: true })
-  response.status(204).json(result.toJSON()).end()
 
+  const updatedBlog = await Blog.findByIdAndUpdate(
+    request.params.id,
+    blog,
+    { new: true }
+  )
+
+  if (!updatedBlog) {
+    return response.status(404).json({ error: "Blog not found" })
+  }
+  console.log(updatedBlog)
+  response.status(201).json(updatedBlog)
 })
 
 blogRouter.post("/", async (request, response) => {

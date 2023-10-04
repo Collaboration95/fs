@@ -9,15 +9,20 @@
 
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMzZGEwMWRlNDlmZjI2ZDgxNjA3YyIsImlhdCI6MTY5NjM1MDE0MCwiZXhwIjoxNjk2MzUzNzQwfQ.ZG32vX438KERlqYpwa53OZWJtsGYjN3jbO8OBFgd3DE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMzZGEwMWRlNDlmZjI2ZDgxNjA3YyIsImlhdCI6MTY5NjQyMzM0MiwiZXhwIjoxNjk2NDI2OTQyfQ.EAW7SZ_WvCfbgRM20uCqHvoOJ7sMT0MwKE12pLlmUAk
 
-{
-"title": "Teen Titans",
-
-"userId": "651ac9adb940f4a0e3a640bd"
+ {
+    "title": "Generic Blog Title 4 ",
+    "author": "Austin Mcrboom ",
+    "url": "http://www.google.com",
+    "likes": 123,
+    "id": "651c3da01de49ff26d81607c"
 }
 
-# DELETE http://localhost:3001/api/blogs/651c1bd3a2301c030034c1bb
+# PATCH  http://localhost:3001/api/blogs/651d5dfef96318ea48aa0ad6
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMwZTVhNzcwZjMxYmE1ZjdkZTc5YiIsImlhdCI6MTY5NjMzNzUwNywiZXhwIjoxNjk2MzQxMTA3fQ.r5d4LxZTTbCC1xd1gJ1XmPcfkdfGT1JFsxLP6-9h8xI
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY1MWMzZGEwMWRlNDlmZjI2ZDgxNjA3YyIsImlhdCI6MTY5NjQyMzM0MiwiZXhwIjoxNjk2NDI2OTQyfQ.EAW7SZ_WvCfbgRM20uCqHvoOJ7sMT0MwKE12pLlmUAk
 
+# {
+#     "likes":1223
+# }
