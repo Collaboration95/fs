@@ -9,7 +9,7 @@ const loginRouter = require("./controllers/login")
 const blogsRouter = require("./controllers/blogs")
 const userRouter = require("./controllers/users")
 const logger = require("./utils/logger")
-
+// app.use(express.static("dist"))
 mongoose.connect(config.MONGODB_URI)
   .then(() => {
     logger.info("connected to MongoDB")
@@ -20,6 +20,14 @@ mongoose.connect(config.MONGODB_URI)
 
 app.use(cors())
 app.use(express.json())
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+)
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 app.use(middleware.userExtractor)
