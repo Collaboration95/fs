@@ -1,7 +1,8 @@
-import { handle } from 'express/lib/router'
 import React , { useState,useEffect } from 'react'
 
-const LoginForm = ({username,password,handleLogin,handlePasswordChange,handleUsernameChange}) => (
+const LoginForm = ({username,password,handleLogin,handlePasswordChange,handleUsernameChange}) => {
+
+  return (
     <form onSubmit={handleLogin}>
       <div>
         username
@@ -24,5 +25,5 @@ const LoginForm = ({username,password,handleLogin,handlePasswordChange,handleUse
       <button type="submit">login</button>
     </form>      
   )
-
+}
 export default LoginForm
