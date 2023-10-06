@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import AddBlog from './components/AddBlog'
-
+import Notifications from './components/Notifications'
+import "./index.css"
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   const [newblog, setNewBlog] = useState({title:'',author:'',url:''})
-  // const [newblog, setNewBlog] = useState('')
-  const [newTite, setNewTitle] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -50,16 +50,14 @@ const App = () => {
       ) 
       blogService.setToken(user.token)
       setUser(user)
-       
-      // const user = await loginService.login({ username, password });
-      // setUser(user);
+
       setUsername('');
       setPassword('');
     } catch (exception) {
-      setErrorMessage('Wrong credentials');
+      setErrorMessage('Wrong username/password combo');
       setTimeout(() => {
         setErrorMessage(null);
-      }, 5000);
+      }, 3000);
     }
   };
   const Logout =()=>{
@@ -88,13 +86,24 @@ const App = () => {
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
+        setErrorMessage(`a new blog , ${returnedBlog.title} by ${returnedBlog.author} Added`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 3000)
         setNewBlog({ title: '', author: '', url: '' });
+      })
+      .catch(error => {
+        setErrorMessage("Empty data not allowed")
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 3000)
       })
   }
 
   return (
     <div>
   <h2>Blogs</h2>
+  <Notifications message={errorMessage} />
   {user === null ?
     <LoginForm handleLogin={handleLogin} username={username} password={password}  handlePasswordChange={handlePasswordChange} handleUsernameChange={handleUsernameChange}/>:
   (<>
