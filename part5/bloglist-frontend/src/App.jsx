@@ -42,7 +42,7 @@ const App = () => {
   const addNewBlogRef = useRef()
 
   const addNewBlog = (blogObject) => {
-    noteFormRef.current.toggleVisibility()
+    addNewBlogRef.current.toggleVisibility()
      blogService
       .create(blogObject)
       .then(returnedBlog => {

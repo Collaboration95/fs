@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const AddBlog= ({addNewBlog}) =>{
+const AddBlog= ({addNewBlog,addLike}) =>{
   const [newblog, setNewBlog] = useState({title:'',author:'',url:''})
   const addBlog = (event) => {
     event.preventDefault()
