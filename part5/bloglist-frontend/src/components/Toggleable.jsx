@@ -1,5 +1,3 @@
-
-import { use } from 'express/lib/router'
 import { useState, forwardRef, useImperativeHandle } from 'react'
 
 const Togglable = forwardRef((props,refs) => {
@@ -26,6 +24,7 @@ const Togglable = forwardRef((props,refs) => {
       <div style={showWhenVisible}>
         {props.children}
         <button onClick={toggleVisibility}>cancel</button>
+        <br/><br/>
       </div>
     </div>
   )
