@@ -1,4 +1,13 @@
-const CreateNew = ({addBlog,handleBlogChange,newblog}) =>{
+import React, { useState } from 'react'
+
+const AddBlog= ({addNewBlog}) =>{
+  const [newblog, setNewBlog] = useState({title:'',author:'',url:''})
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {...newblog}
+    addNewBlog(blogObject)
+    setNewBlog({ title: '', author: '', url: '' });
+  }
     return (
     <>
     <h2>Create new</h2>
@@ -8,7 +17,7 @@ const CreateNew = ({addBlog,handleBlogChange,newblog}) =>{
         <input
           name="title"
           value={newblog.title}
-          onChange={handleBlogChange}
+          onChange={event=>setNewBlog({...newblog,title:event.target.value})}
         />
       </div>
       <div>
@@ -16,7 +25,7 @@ const CreateNew = ({addBlog,handleBlogChange,newblog}) =>{
         <input
           name="author"
           value={newblog.author}
-          onChange={handleBlogChange}
+          onChange={event=>setNewBlog({...newblog,author:event.target.value})}
         />
       </div>
       <div>
@@ -24,7 +33,7 @@ const CreateNew = ({addBlog,handleBlogChange,newblog}) =>{
         <input
         name="url"
           value={newblog.url}
-          onChange={handleBlogChange}
+          onChange={event=>setNewBlog({...newblog,url:event.target.value})}
         />
       </div>
       <button type="submit">create</button>
@@ -33,4 +42,4 @@ const CreateNew = ({addBlog,handleBlogChange,newblog}) =>{
     )
 }
 
-export default CreateNew
+export default AddBlog

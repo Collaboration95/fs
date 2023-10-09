@@ -1,25 +1,32 @@
 import React , { useState,useEffect } from 'react'
 
-const LoginForm = ({username,password,handleLogin,handlePasswordChange,handleUsernameChange}) => {
-
+const LoginForm = ({handleLogin}) => {
+  const [newUsername,setNewUsername] = useState('')
+  const [newPassword,setNewPassword] = useState('')
+  const triggerLogin = (event) => {
+    event.preventDefault()
+    handleLogin(newUsername,newPassword)
+    setNewUsername('')
+    setNewPassword('')
+  }
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={triggerLogin}>
       <div>
         username
           <input
           type="text"
-          value={username}
+          value={newUsername}
           name="Username"
-          onChange={handleUsernameChange}
+          onChange={event=>setNewUsername(event.target.value)}
         />
       </div>
       <div>
         password
           <input
           type="password"
-          value={password}
+          value={newPassword}
           name="Password"
-          onChange={handlePasswordChange}
+          onChange={event=>setNewPassword(event.target.value)}
         />
       </div>
       <button type="submit">login</button>
