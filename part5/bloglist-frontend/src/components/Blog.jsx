@@ -25,6 +25,9 @@ const Blog = ({ blog ,addLike,removeBlog,user }) => {
   }
   return (
     <div style={blogStyle}>
+
+
+
   title: {blog.title}
   author: {blog.author}
       <br/>
@@ -38,11 +41,11 @@ const Blog = ({ blog ,addLike,removeBlog,user }) => {
     </div>
   )
 }
-Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  addLike: PropTypes.func.isRequired,
-  removeBlog: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired
-}
+// Blog.propTypes = {
+//   blog: PropTypes.object.isRequired,
+//   addLike: PropTypes.func.isRequired,
+//   removeBlog: PropTypes.func.isRequired,
+//   user: PropTypes.string.isRequired
+// }
 
 export default Blog
