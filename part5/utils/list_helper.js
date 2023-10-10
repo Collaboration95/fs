@@ -1,6 +1,3 @@
-const blog = require("../models/blog")
-
-
 const totalLikes = (blogs) => {
     const reducer = (sum, item) => {
         return sum + item.likes

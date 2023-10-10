@@ -1,36 +1,41 @@
-import React , { useState,useEffect } from 'react'
-
-const LoginForm = ({handleLogin}) => {
-  const [newUsername,setNewUsername] = useState('')
-  const [newPassword,setNewPassword] = useState('')
+import React , { useState } from "react"
+import PropTypes from "prop-types"
+const LoginForm = ({ handleLogin }) => {
+  const [newUsername,setNewUsername] = useState("")
+  const [newPassword,setNewPassword] = useState("")
   const triggerLogin = (event) => {
     event.preventDefault()
     handleLogin(newUsername,newPassword)
-    setNewUsername('')
-    setNewPassword('')
+    setNewUsername("")
+    setNewPassword("")
   }
   return (
     <form onSubmit={triggerLogin}>
       <div>
         username
-          <input
+        <input
           type="text"
           value={newUsername}
           name="Username"
-          onChange={event=>setNewUsername(event.target.value)}
+          onChange={event => setNewUsername(event.target.value)}
         />
       </div>
       <div>
         password
-          <input
+        <input
           type="password"
           value={newPassword}
           name="Password"
-          onChange={event=>setNewPassword(event.target.value)}
+          onChange={event => setNewPassword(event.target.value)}
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
   )
 }
+
+LoginForm.propTypes = {
+  handleLogin: PropTypes.func.isRequired
+}
+
 export default LoginForm

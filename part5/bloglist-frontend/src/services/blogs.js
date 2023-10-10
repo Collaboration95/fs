@@ -1,5 +1,5 @@
-import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/blogs'
+import axios from "axios"
+const baseUrl = "http://localhost:3001/api/blogs"
 let token = null
 const setToken = newToken => {
   token = `Bearer ${newToken}`
@@ -46,4 +46,4 @@ const remove = async(id) => {
 }
 
 
-export default { getAll, create, update, setToken,patch ,remove}
+export default { getAll, create, update, setToken,patch ,remove }
