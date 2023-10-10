@@ -19,6 +19,13 @@ const RenderBlogs = () => {
             setBlogs(blogs.map(blog => blog.id !== blogObject.id ? blog : returnedBlog))
           })      
         }
+        const removeBlog = (id) => {
+            blogService
+            .remove(id)
+            .then(() => {
+                setBlogs(blogs.filter(b => b.id !== id))
+            })
+            }
 
 
       const sortBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
@@ -26,7 +33,7 @@ const RenderBlogs = () => {
             <>
             <h2>blogs</h2>
             {sortBlogs.map(blog =>
-            <Blog key={blog.id} blog={blog} addLike={addLike} />
+            <Blog key={blog.id} blog={blog} addLike={addLike} removeBlog={removeBlog}/>
             )}
 
             </>
